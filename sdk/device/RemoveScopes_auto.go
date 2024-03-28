@@ -7,9 +7,9 @@ package device
 import (
 	"context"
 	"github.com/juju/errors"
-	"github.com/use-go/onvif"
-	"github.com/use-go/onvif/sdk"
-	"github.com/use-go/onvif/device"
+	"github.com/glebkap/onvif"
+	"github.com/glebkap/onvif/sdk"
+	"github.com/glebkap/onvif/device"
 )
 
 // Call_RemoveScopes forwards the call to dev.CallMethod() then parses the payload of the reply as a RemoveScopesResponse.

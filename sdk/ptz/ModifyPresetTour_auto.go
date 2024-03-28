@@ -7,9 +7,9 @@ package ptz
 import (
 	"context"
 	"github.com/juju/errors"
-	"github.com/use-go/onvif"
-	"github.com/use-go/onvif/sdk"
-	"github.com/use-go/onvif/ptz"
+	"github.com/glebkap/onvif"
+	"github.com/glebkap/onvif/sdk"
+	"github.com/glebkap/onvif/ptz"
 )
 
 // Call_ModifyPresetTour forwards the call to dev.CallMethod() then parses the payload of the reply as a ModifyPresetTourResponse.
