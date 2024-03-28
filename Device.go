@@ -285,3 +285,47 @@ func (dev Device) callMethodDo(endpoint string, method interface{}) (*http.Respo
 
 	return networking.SendSoap(dev.params.HttpClient, endpoint, soap.String())
 }
+
+type Header struct {
+	Tag  string
+	Text string
+}
+
+func (dev Device) CallMethodWithHeaders(method interface{}, headers []Header) (*http.Response, error) {
+	pkgPath := strings.Split(reflect.TypeOf(method).PkgPath(), "/")
+	pkg := strings.ToLower(pkgPath[len(pkgPath)-1])
+
+	endpoint, err := dev.getEndpoint(pkg)
+	if err != nil {
+		return nil, err
+	}
+	return dev.callMethodDoWithHeaders(endpoint, method, headers)
+}
+
+func (dev Device) callMethodDoWithHeaders(endpoint string, method interface{}, headers []Header) (*http.Response, error) {
+	output, err := xml.MarshalIndent(method, "  ", "    ")
+	if err != nil {
+		return nil, err
+	}
+
+	soap, err := dev.buildMethodSOAP(string(output))
+	if err != nil {
+		return nil, err
+	}
+
+	soap.AddRootNamespaces(Xlmns)
+	soap.AddAction()
+
+	for _, header := range headers {
+		elem := etree.NewElement(header.Tag)
+		elem.SetText(header.Text)
+		soap.AddHeaderContent(elem)
+	}
+
+	//Auth Handling
+	if dev.params.Username != "" && dev.params.Password != "" {
+		soap.AddWSSecurity(dev.params.Username, dev.params.Password)
+	}
+
+	return networking.SendSoap(dev.params.HttpClient, endpoint, soap.String())
+}
