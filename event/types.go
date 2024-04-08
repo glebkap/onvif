@@ -32,10 +32,11 @@ type MessageNotification struct {
 }
 
 type MessageNotificationHolderType struct {
-	UtcTime           xsd.DateTime     `xml:",attr"`
-	PropertyOperation xsd.String       `xml:",attr"`
-	Source            onvif.SimpleItem `xml:"Source>SimpleItem"`
-	Data              onvif.SimpleItem `xml:"Data>SimpleItem"`
+	UtcTime           xsd.DateTime       `xml:",attr"`
+	PropertyOperation xsd.String         `xml:",attr"`
+	Source            []onvif.SimpleItem `xml:"Source>SimpleItem"`
+	Data              []onvif.SimpleItem `xml:"Data>SimpleItem"`
+	Key               []onvif.SimpleItem `xml:"Key>SimpleItem"`
 }
 
 // ActionType for AttributedURIType
@@ -56,7 +57,7 @@ type EndpointReferenceType struct { //wsa http://www.w3.org/2005/08/addressing/w
 
 // FilterType struct
 type FilterType struct {
-	TopicExpression *TopicExpressionType  `xml:"wsnt:TopicExpression"`
+	TopicExpression *TopicExpressionType `xml:"wsnt:TopicExpression"`
 	MessageContent  *QueryExpressionType `xml:"wsnt:MessageContent"`
 }
 
