@@ -100,7 +100,7 @@ type PullMessages struct {
 type PullMessagesResponse struct {
 	CurrentTime         CurrentTime
 	TerminationTime     TerminationTime
-	NotificationMessage NotificationMessage
+	NotificationMessage []NotificationMessage
 }
 
 // PullMessagesFaultResponse response type
